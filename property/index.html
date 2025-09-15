@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <link rel="stylesheet" href="../style.css">
+    <title>Property Details</title>
+</head>
+<body>
+    <div id="navbar">
+        <div id="icon"></div>
+        <div id="nav">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <div class="nav-divider"></div>
+            <div id="profile"><i class="fa-solid fa-user"></i></div>
+        </div>
+    </div>
+    <div id="property-details" class="property-details-container">
+        <!-- Details will be injected by JS -->
+        <style>
+        .property-details-container {
+            max-width: 600px;
+            margin: 3em auto;
+            background: #fff;
+            border-radius: 1.5em;
+            box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+            padding: 2em 2em 3em 2em;
+        }
+        .property-details-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .property-details-card img {
+            margin-bottom: 1em;
+        }
+        .property-details-card h2 {
+            margin-bottom: 1em;
+            font-size: 2em;
+            color: #222;
+        }
+        .property-info {
+            font-size: 1.1em;
+            color: #444;
+            margin-bottom: 0.7em;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 0.7em;
+        }
+        .property-details-card a {
+            color: #222;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 2em;
+        }
+        </style>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var data = localStorage.getItem('selectedListing');
+        if (!data) {
+            document.getElementById('property-details').innerHTML = '<p>ไม่พบข้อมูลอสังหาริมทรัพย์</p>';
+            return;
+        }
+        var listing = JSON.parse(data);
+        var html = `
+            <div class="property-details-card">
+                <img src="${listing.img.replace('./assets/', '../assets/')}" alt="${listing.type}" style="width:100%;max-width:500px;border-radius:1em;">
+                <h2>${listing.title}</h2>
+                <div class="property-info"><i class="fa-solid fa-tag"></i> <b>ราคา:</b> ${listing.price.toLocaleString()} บาท</div>
+                <div class="property-info"><i class="fa-solid fa-ruler-combined"></i> <b>พื้นที่:</b> ${listing.area} ตร.ม.</div>
+                <div class="property-info"><i class="fa-solid fa-location-dot"></i> <b>ที่ตั้ง:</b> ${listing.location}</div>
+                <div class="property-info"><i class="fa-solid fa-home"></i> <b>ประเภท:</b> ${listing.type}</div>
+                <div class="property-info"><i class="fa-solid fa-bed"></i> <b>ห้องนอน:</b> ${listing.bedrooms || '-'} ห้อง</div>
+                <div class="property-info"><i class="fa-solid fa-bath"></i> <b>ห้องน้ำ:</b> ${listing.bathrooms || '-'} ห้อง</div>
+                <div class="property-info"><i class="fa-solid fa-car"></i> <b>ที่จอดรถ:</b> ${listing.parking || '-'} คัน</div>
+                <div class="property-info"><i class="fa-solid fa-calendar-days"></i> <b>ปีที่สร้าง:</b> ${listing.year || '-'}
+                </div>
+                <div class="property-info"><i class="fa-solid fa-info-circle"></i> <b>รายละเอียดเพิ่มเติม:</b> ${listing.description || 'ไม่มีข้อมูลเพิ่มเติม'}
+                </div>
+                <a href="../index.html" style="display:inline-block;margin-top:2em; color:#222; text-decoration:none; font-weight:500;">&larr; กลับไปหน้าหลัก</a>
+            </div>
+        `;
+        document.getElementById('property-details').innerHTML = html;
+    });
+    </script>
+</body>
+</html>

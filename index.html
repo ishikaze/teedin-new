@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+    <title>Teedin</title>
+
+</head>
+<body>
+    <div id="navbar">
+        <div id="icon"></div>
+        <div id="nav">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <div class="nav-divider"></div>
+            <div id="profile"><i class="fa-solid fa-user"></i></div>
+        </div>
+    </div>
+    <div id="featured">
+        <div class="featured-slider">
+            <img id="featured-image" src="./assets/img/banner-01.jpg" alt="Featured" class="featured-img" />
+            <div id="featured-text-container">
+                <div id="featured-text" class="featured-text">Welcome to Teedin - Find Your Dream Property</div>
+            </div>
+        </div>
+    </div>
+    <div id="sorter">
+        <div class="sorter-button active" data-filter="*"> 
+            <i class="fa-solid fa-border-all"></i>
+            <p>ทั้งหมด</p>
+        </div>
+        <div class="sorter-button" data-filter=".house"> 
+            <i class="fa-regular fa-house"></i>
+            <p>บ้าน</p>
+        </div>
+        <div class="sorter-button" data-filter=".apartment"> 
+            <i class="fa-regular fa-building"></i>
+            <p>อพาร์ทเมนต์</p>
+        </div>
+        <div class="sorter-button" data-filter=".villa"> 
+            <i class="fa-solid fa-umbrella-beach"></i>
+            <p>วิลล่า</p>
+        </div>
+        <div class="sorter-button" data-filter=".land"> 
+            <i class="fa-regular fa-map"></i>
+            <p>ที่ดิน</p>
+        </div>
+    </div>
+
+    <div id="listings-container"> 
+        <div id="listings" class="listings-grid"></div>
+    </div>
+    
+        
+    </div>
+
+    <script src="index.js"></script>
+    <script src="listings.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Custom sorter logic
+        var sorterButtons = document.querySelectorAll('.sorter-button');
+        var listings = document.querySelectorAll('.listing');
+        // Ensure 'All' is selected by default
+        sorterButtons.forEach(b => b.classList.remove('active'));
+        var allBtn = document.querySelector('.sorter-button[data-filter="*"]');
+        if (allBtn) allBtn.classList.add('active');
+
+        sorterButtons.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var filterValue = btn.getAttribute('data-filter');
+                sorterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                listings.forEach(function(listing) {
+                    if (filterValue === '*') {
+                        listing.style.display = '';
+                    } else {
+                        listing.style.display = listing.classList.contains(filterValue.slice(1)) ? '' : 'none';
+                    }
+                });
+            });
+        });
+
+        // Sticky navbar logic
+        var navbar = document.getElementById('navbar');
+        var stickyScroll = 60; // px to scroll before sticky
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > stickyScroll) {
+                navbar.classList.add('sticky');
+            } else {
+                navbar.classList.remove('sticky');
+            }
+        });
+    });
+    </script>
+</body>
+</html>

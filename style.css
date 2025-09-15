@@ -1,0 +1,335 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: prompt, sans-serif;
+    background-color: #fff;
+    padding-top: 0em;
+}
+
+#navbar {
+    display: flex;
+    align-items: center;
+    width: 100vw;
+    padding: 0.5em 1em;
+    height: 5em;
+    transition: height 0.3s, padding 0.3s;
+}
+
+#navbar.sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 500;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    background: #fff;
+    height: 5em;
+    padding: 0.5em 1em;
+}
+
+#icon {
+    background-image: url("./assets/img/logo.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 5em;
+    height: 5em;
+    margin-right: auto;
+}
+
+#nav {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+#nav a {
+    text-decoration: none;
+    color: black;
+    margin: 0 0 0 1em;
+}
+
+.nav-divider {
+    background-color: black;
+    width: .01em;
+    height: 2em;
+    margin: 1.5em;
+}
+
+#profile {
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+    border-radius: 50%;
+    width: 3.5em;
+    height: 3.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}
+
+#profile:hover {
+    cursor: pointer;
+}
+
+#profile i {
+    font-size: 1.5em;
+}
+
+#featured {
+    width: 100%;
+    height: 20em;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.featured-slider {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.featured-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    transition: opacity 0.6s ease;
+    z-index: 1;
+}
+
+.fade-in-img {
+    opacity: 0.75;
+    transition: opacity 0.6s ease;
+}
+.fade-out-img {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+#featured-text-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.featured-text {
+    font-size: 1.5em;
+    color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    text-align: center;
+    font-size: 2em;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.6s, transform 0.6s;
+}
+
+.fade-in {
+    opacity: 1;
+    transition: opacity 0.6s, transform 0.6s;
+}
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.6s, transform 0.6s;
+}
+.slide-up {
+    transform: translateY(0);
+    transition: transform 0.6s;
+}
+.slide-down {
+    transform: translateY(2em);
+    transition: transform 0.6s;
+}
+
+
+#sorter {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    padding: 1em;
+    justify-items: stretch;
+    align-items: stretch;
+}
+
+.sorter-button {
+    min-width: 0;
+    max-width: none;
+    width: 90%;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0.5em;
+    padding: 0.5em 0;
+    background-color: #FFF;
+    color: black;
+    border: 1px solid #000000;
+    padding: .5em;
+    margin: .5em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 1em;
+}
+
+.sorter-button.active {
+    background-color: #222;
+    color: #fff;
+    border-color: #222;
+}
+
+.sorter-button i {
+    font-size: 2em;
+    margin-bottom: 0.25em;
+}
+
+.sorter-button span {
+    font-size: 1em;
+}
+
+@media (max-width: 700px) {
+    #sorter {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 1em;
+    }
+}
+
+@media (max-width: 700px) and (orientation: portrait) {
+    #sorter {
+        gap: 1em;
+        padding: 1em;
+    }
+    .sorter-button {
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        height: 3em;
+        padding: 0.5em;
+        margin: 0;
+    }
+    .sorter-button i {
+        font-size: 1.5em;
+        margin-bottom: 0;
+        margin-right: 0.5em;
+    }
+    .sorter-button p {
+        font-size: 1em;
+        margin: 0;
+    }
+}
+
+
+#listings-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    margin: 0 auto;
+}
+
+#listings {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2em;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2.5em 0;
+}
+
+.listings-grid {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.listing {
+    background: #fff;
+    border-radius: 1em;
+    border: #000 solid 1px;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: box-shadow 0.3s, opacity 0.5s ease;
+    transition-delay: 0ms;
+    opacity: 0;
+    width: 100%;
+    max-width: 18em;
+    margin-bottom: 2em;
+    margin-left: 0;
+    margin-right: 0;
+    cursor: pointer;
+}
+.listing:hover {
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    transform: translateY(-2px) scale(1.02);
+    transition: box-shadow 0.3s, transform 0.3s;
+}
+.listing img {
+    width: 100%;
+    height: 10em;
+    object-fit: cover;
+    border-radius: 0.5em;
+    margin-bottom: 0;
+    margin-right: 1em;
+}
+.listing-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.5em;
+}
+.listing-info h3 {
+    font-size: 1.2em;
+    margin: 0.5em 0 0 0;
+    color: #222;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+.listing-info .listing-price {
+    color: #444;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+.listing-info .listing-area {
+    color: #444;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+.listing-info i {
+    color: #888;
+    font-size: 1.1em;
+}
+
+    .fade-in-listing {
+        opacity: 1;
+    }
