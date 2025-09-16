@@ -55,8 +55,7 @@
     width: 7em;
     height: 7em;
     object-fit: contain;
-    opacity: 0;
-    animation: splash-logo-fade 0.5s forwards 0.3s;
+    opacity: 1;
 }
 .splash-version {
     font-size: 1em;
@@ -126,19 +125,14 @@ body {
     padding: 0.5em 1em;
     height: 5em;
     transition: height 0.3s, padding 0.3s;
-}
-
-#navbar.sticky {
-    position: fixed;
+    position: sticky;
     top: 0;
     left: 0;
-    width: 100vw;
     z-index: 500;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     background: #fff;
-    height: 5em;
-    padding: 0.5em 1em;
 }
+
 
 #icon {
     background-image: url("./assets/img/logo.png");
