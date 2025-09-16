@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
     <title>Teedin</title>
-
 </head>
 <body>
     <div id="splash-screen">
@@ -195,19 +194,28 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        splashScreen.style.display = 'flex';
-        updateProgress();
-        setTimeout(function() {
-            preloadAllImages(function() {
-                splashLoadingText.textContent = 'โหลดเสร็จสิ้น!';
-                splashProgress.style.width = '100%';
-                setTimeout(() => {
-                    splashProgress.style.opacity = '0';
-                    splashLoadingText.style.opacity = '0';
-                    setTimeout(fadeOutSplash, 1000);
-                }, 1000);
-            });
-        }, 2000);
+        // Show splash only on first load
+        if (!sessionStorage.getItem('splashShown')) {
+            splashScreen.style.display = 'flex';
+            updateProgress();
+            setTimeout(function() {
+                preloadAllImages(function() {
+                    splashLoadingText.textContent = 'โหลดเสร็จสิ้น!';
+                    splashProgress.style.width = '100%';
+                    setTimeout(() => {
+                        splashProgress.style.opacity = '0';
+                        splashLoadingText.style.opacity = '0';
+                        setTimeout(function() {
+                            fadeOutSplash();
+                            sessionStorage.setItem('splashShown', '1');
+                        }, 1000);
+                    }, 1000);
+                });
+            }, 2000);
+        } else {
+            splashScreen.style.display = 'none';
+            navbar.style.display = '';
+        }
     });
     </script>
 </body>
