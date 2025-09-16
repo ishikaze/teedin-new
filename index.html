@@ -9,12 +9,27 @@
 
 </head>
 <body>
-    <div id="navbar">
+    <div id="splash-screen">
+        <div class="splash-center">
+            <img src="./assets/img/logo.png" alt="Teedin Logo" class="splash-logo">
+            <div class="splash-version">v0.2</div>
+        </div>
+        <div class="splash-progress-container">
+            <div class="splash-progress-bar"><div class="splash-progress"></div></div>
+            <div class="splash-loading-text">กำลังโหลดรูปภาพ...</div>
+        </div>
+    </div>
+    <div id="navbar" style="display:none;">
         <div id="icon"></div>
-        <div id="nav">
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact</a>
+        <div id="burger" class="burger-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div id="nav" class="nav-links">
+            <a href="./">Home</a>
+            <a href="./about">About</a>
+            <a href="./contact">Contact</a>
             <div class="nav-divider"></div>
             <div id="profile"><i class="fa-solid fa-user"></i></div>
         </div>
@@ -27,8 +42,13 @@
             </div>
         </div>
     </div>
+
+    <div class="vertical-divider"></div>
+    <h2 id="header-text">ทำเลที่ดิน เราคิดค่าคอมมิชชั่นเพียง 5% ของเงินที่ขายได้เท่านั้น</h2>
+    <div class="vertical-divider"></div>
+
     <div id="sorter">
-        <div class="sorter-button active" data-filter="*"> 
+    <div class="sorter-button active" data-filter="*"> 
             <i class="fa-solid fa-border-all"></i>
             <p>ทั้งหมด</p>
         </div>
@@ -48,6 +68,38 @@
             <i class="fa-regular fa-map"></i>
             <p>ที่ดิน</p>
         </div>
+        <div class="sorter-button advanced-sorter-btn" id="advanced-sorter-btn"> 
+            <i class="fa-solid fa-sliders"></i>
+            <p>ขั้นสูง</p>
+        </div>
+        <div id="advanced-sorter-popup" class="advanced-sorter-popup" style="display:none;">
+            <div class="advanced-sorter-content">
+                <h3>ตัวกรองขั้นสูง</h3>
+                <p>เรียงตาม:</p>
+                <button class="adv-sort" data-sort="price-asc">ราคาต่ำสุด</button>
+                <button class="adv-sort" data-sort="price-desc">ราคาสูงสุด</button>
+                <div style="margin:1em 0;">
+                    <label>ช่วงราคา (ต่ำสุด - สูงสุด):</label><br>
+                    <div style="display:flex;align-items:center;gap:1em;">
+                        <span id="min-price-label">0</span>
+                        <input type="range" id="min-price-slider" min="0" max="15000000" step="100000" value="0">
+                        <span id="max-price-label">15,000,000</span>
+                        <input type="range" id="max-price-slider" min="0" max="15000000" step="100000" value="15000000">
+                    </div>
+                </div>
+                <div style="margin:1em 0;">
+                    <label for="location-dropdown">เลือกที่ตั้ง:</label>
+                    <select id="location-dropdown" style="padding:0.3em 1em; border-radius:0.3em; border:1px solid #ccc; font-size:1em;">
+                        <option value="">ทั้งหมด</option>
+                    </select>
+                </div>
+                <div style="display:flex;gap:1em;justify-content:center;margin-top:1em;">
+                    <button id="apply-adv-filters">ตกลง</button>
+                    <button id="clear-adv-filters">ล้างตัวกรอง</button>
+                </div>
+                <button id="close-adv-sorter" style="margin-top:1em;">ปิด</button>
+            </div>
+        </div>
     </div>
 
     <div id="listings-container"> 
@@ -60,40 +112,102 @@
     <script src="index.js"></script>
     <script src="listings.js"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Custom sorter logic
-        var sorterButtons = document.querySelectorAll('.sorter-button');
-        var listings = document.querySelectorAll('.listing');
-        // Ensure 'All' is selected by default
-        sorterButtons.forEach(b => b.classList.remove('active'));
-        var allBtn = document.querySelector('.sorter-button[data-filter="*"]');
-        if (allBtn) allBtn.classList.add('active');
+    const splashScreen = document.getElementById('splash-screen');
+    const splashLogo = document.querySelector('.splash-logo');
+    const splashVersion = document.querySelector('.splash-version');
+    const splashProgress = document.querySelector('.splash-progress');
+    const splashLoadingText = document.querySelector('.splash-loading-text');
+    const navbar = document.getElementById('navbar');
 
-        sorterButtons.forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                var filterValue = btn.getAttribute('data-filter');
-                sorterButtons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                listings.forEach(function(listing) {
-                    if (filterValue === '*') {
-                        listing.style.display = '';
-                    } else {
-                        listing.style.display = listing.classList.contains(filterValue.slice(1)) ? '' : 'none';
-                    }
-                });
-            });
+    // Burger menu logic
+    const burger = document.getElementById('burger');
+    const navLinks = document.getElementById('nav');
+    if (burger && navLinks) {
+        burger.addEventListener('click', function() {
+            burger.classList.toggle('open');
+            navLinks.classList.toggle('nav-open');
         });
-
-        // Sticky navbar logic
-        var navbar = document.getElementById('navbar');
-        var stickyScroll = 60; // px to scroll before sticky
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > stickyScroll) {
-                navbar.classList.add('sticky');
-            } else {
-                navbar.classList.remove('sticky');
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 720) {
+                burger.classList.remove('open');
+                navLinks.classList.remove('nav-open');
             }
         });
+    }
+
+    // preload list UPDATE IF THERES NEW PICTURE
+    const preloadImages = [
+        './assets/img/logo.png',
+        './assets/img/banner-01.jpg',
+        './assets/img/banner-02.jpg',
+        './assets/img/banner-03.jpg',
+        './assets/img/banner-04.jpg',
+        './assets/img/banner-05.jpg',
+        './assets/img/property-01.jpg',
+        './assets/img/property-02.jpg',
+        './assets/img/property-03.jpg',
+        './assets/img/property-04.jpg',
+        './assets/img/property-05.jpg',
+        './assets/img/property-06.jpg',
+        './assets/img/property-07.jpg',
+        './assets/img/property-08.jpg',
+        './assets/img/property-09.jpg',
+        './assets/img/img111.jpg',
+        './assets/img/img112.jpg',
+        './assets/img/img113.jpg',
+        './assets/img/featured.jpg',
+        './assets/img/deal-01.jpg',
+        './assets/img/deal-02.jpg',
+        './assets/img/deal-03.jpg',
+        './assets/img/contact-bg.jpg',
+        './assets/img/page-heading-bg.jpg',
+        './assets/img/video-bg.jpg',
+        './assets/img/video-frame.jpg'
+    ];
+
+    let loadedCount = 0;
+    function updateProgress() {
+        const percent = Math.round((loadedCount / preloadImages.length) * 100);
+        splashProgress.style.width = percent + '%';
+        splashLoadingText.textContent = `กำลังโหลดรูปภาพ (${loadedCount}/${preloadImages.length})...`;
+    }
+
+    function preloadAllImages(callback) {
+        preloadImages.forEach(src => {
+            const img = new Image();
+            img.onload = img.onerror = function() {
+                loadedCount++;
+                updateProgress();
+                if (loadedCount === preloadImages.length) {
+                    callback();
+                }
+            };
+            img.src = src;
+        });
+    }
+
+    function fadeOutSplash() {
+        splashScreen.classList.add('fade-out');
+        setTimeout(() => {
+            splashScreen.style.display = 'none';
+            navbar.style.display = '';
+        }, 700);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        splashScreen.style.display = 'flex';
+        updateProgress();
+        setTimeout(function() {
+            preloadAllImages(function() {
+                splashLoadingText.textContent = 'โหลดเสร็จสิ้น!';
+                splashProgress.style.width = '100%';
+                setTimeout(() => {
+                    splashProgress.style.opacity = '0';
+                    splashLoadingText.style.opacity = '0';
+                    setTimeout(fadeOutSplash, 1000);
+                }, 1000);
+            });
+        }, 2000);
     });
     </script>
 </body>

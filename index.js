@@ -51,31 +51,33 @@ function showImageAndText(idx) {
 function nextSlide() {
 	fadeOutText();
 	fadeImage();
-	setTimeout(() => {
-		current = (current + 1) % images.length;
-		// Update image and text only after fade out
-		imageEl.src = images[current];
-		textEl.textContent = texts[current];
-		// Trigger fade-in and slide-up
-		fadeInText();
-		imageEl.classList.remove('fade-out-img');
-		imageEl.classList.add('fade-in-img');
-	}, 600);
+	const nextIdx = (current + 1) % images.length;
+	const nextImgSrc = images[nextIdx];
+	const nextText = texts[nextIdx];
+	const preloadImg = new Image();
+	preloadImg.onload = function() {
+		setTimeout(() => {
+			current = nextIdx;
+			imageEl.src = nextImgSrc;
+			textEl.textContent = nextText;
+			fadeInText();
+			imageEl.classList.remove('fade-out-img');
+			imageEl.classList.add('fade-in-img');
+		}, 600);
+	};
+	preloadImg.src = nextImgSrc;
 }
 
 
 
 
 window.addEventListener('DOMContentLoaded', () => {
-	// Set initial image/text
 	imageEl.src = images[current];
 	textEl.textContent = texts[current];
-	// Remove animation classes to reset
 	imageEl.classList.remove('fade-in-img', 'fade-out-img');
 	textEl.classList.remove('fade-in', 'fade-out');
 	textContainer.classList.remove('slide-up', 'slide-down');
 
-	// Play initial animation exactly as in nextSlide
 	requestAnimationFrame(() => {
 		imageEl.classList.add('fade-in-img');
 		textEl.classList.add('fade-in');
@@ -84,12 +86,10 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 function nextSlide() {
-	// Remove both fade classes before adding
 	imageEl.classList.remove('fade-in-img', 'fade-out-img');
 	textEl.classList.remove('fade-in', 'fade-out');
 	textContainer.classList.remove('slide-up', 'slide-down');
 
-	// Trigger fade out
 	imageEl.classList.add('fade-out-img');
 	textEl.classList.add('fade-out');
 	textContainer.classList.add('slide-down');
@@ -99,7 +99,6 @@ function nextSlide() {
 		imageEl.src = images[current];
 		textEl.textContent = texts[current];
 
-		// Remove fade out, add fade in (force browser to recognize change)
 		imageEl.classList.remove('fade-out-img');
 		textEl.classList.remove('fade-out');
 		textContainer.classList.remove('slide-down');

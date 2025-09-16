@@ -1,6 +1,113 @@
 @import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
 * {
+#burger.burger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 2.5em;
+    height: 2.5em;
+    cursor: pointer;
+    margin-left: auto;
+    padding-right: 2em;
+    z-index: 1001;
+}
+#burger span {
+    display: block;
+    width: 2em;
+    height: 0.3em;
+    background: #222;
+    margin: 0.25em 0;
+    border-radius: 0.2em;
+    transition: all 0.3s;
+}
+#burger.open span:nth-child(1) {
+    transform: translateY(0.55em) rotate(45deg);
+}
+#burger.open span:nth-child(2) {
+    opacity: 0;
+}
+#burger.open span:nth-child(3) {
+    transform: translateY(-0.55em) rotate(-45deg);
+}
+
+#splash-screen {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #fff;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.7s;
+}
+.splash-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+.splash-logo {
+    width: 7em;
+    height: 7em;
+    object-fit: contain;
+    opacity: 0;
+    animation: splash-logo-fade 0.5s forwards 0.3s;
+}
+.splash-version {
+    font-size: 1em;
+    color: #00000041;
+    margin-top: 1em;
+    opacity: 0;
+    animation: splash-version-fade 0.5s forwards 0.2s;
+}
+.splash-progress-container {
+    width: 100%;
+    max-width: 22em;
+    margin: 2em auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.splash-progress-bar {
+    width: 100%;
+    height: 0.7em;
+    background: #eee;
+    border-radius: 0.5em;
+    overflow: hidden;
+    margin-bottom: 0.7em;
+}
+.splash-progress {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #222 0%, #888 100%);
+    border-radius: 0.5em;
+    transition: width 0.4s;
+}
+.splash-loading-text {
+    font-size: 1em;
+    color: #444;
+    text-align: center;
+    margin-top: 0.2em;
+    transition: opacity 0.4s;
+}
+.fade-out {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.7s;
+}
+@keyframes splash-logo-fade {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+@keyframes splash-version-fade {
+    from { opacity: 0; transform: translateY(1em); }
+    to { opacity: 1; transform: translateY(0); }
+}
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -89,6 +196,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 1em;
 }
 
 .featured-slider {
@@ -163,7 +271,7 @@ body {
 
 #sorter {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 0;
     padding: 1em;
     justify-items: stretch;
@@ -198,6 +306,76 @@ body {
     border-color: #222;
 }
 
+.advanced-sorter-btn {
+    background-color: #f5f5f5;
+    color: #222;
+    border-color: #888;
+}
+.advanced-sorter-btn:hover {
+    background-color: #e0e0e0;
+    color: #111;
+    border-color: #222;
+}
+
+.advanced-sorter-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border-radius: 1em;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    z-index: 9999;
+    min-width: 320px;
+    padding: 2em 2em 1em 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.advanced-sorter-content h3 {
+    margin-bottom: 1em;
+    font-size: 1.3em;
+    color: #222;
+}
+.advanced-sorter-content button {
+    margin: 0.5em 0;
+    padding: 0.5em 1.5em;
+    border-radius: 0.5em;
+    border: 1px solid #222;
+    background: #f5f5f5;
+    color: #222;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.2s;
+}
+.advanced-sorter-content button:hover {
+    background: #222;
+    color: #fff;
+}
+.advanced-sorter-content input[type="number"] {
+
+.advanced-sorter-content input[type="range"] {
+    width: 120px;
+    accent-color: #222;
+    margin: 0 0.5em;
+}
+.advanced-sorter-content select {
+    padding: 0.3em 1em;
+    border-radius: 0.3em;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    margin-left: 0.5em;
+}
+.advanced-sorter-content span {
+    min-width: 4em;
+    display: inline-block;
+    text-align: center;
+    font-size: 1em;
+    color: #222;
+}
+
+}
+
 .sorter-button i {
     font-size: 2em;
     margin-bottom: 0.25em;
@@ -207,14 +385,14 @@ body {
     font-size: 1em;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 720px) {
     #sorter {
         grid-template-columns: repeat(2, 1fr);
         padding: 1em;
     }
 }
 
-@media (max-width: 700px) and (orientation: portrait) {
+@media (max-width: 720px) and (orientation: portrait) {
     #sorter {
         gap: 1em;
         padding: 1em;
@@ -333,3 +511,70 @@ body {
     .fade-in-listing {
         opacity: 1;
     }
+
+.vertical-divider {
+    width: 50%;
+    height: 0.01em;
+    background-color: black;
+    margin: auto;
+}
+
+#header-text {
+    width: 100%;
+    padding: 1em;
+    text-align: center;
+    font-size: 2em;
+    color: #000000;
+    font-weight: 600;
+}
+
+@media (max-width: 720px) {
+    #burger.burger-menu {
+        display: flex;
+    }
+    #nav.nav-links {
+        position: fixed;
+        top: 5em;
+        right: 0;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        flex-direction: column;
+        align-items: flex-start;
+        width: 70vw;
+        max-width: 18em;
+        height: auto;
+        padding: 2em 1.5em 1em 1.5em;
+        border-radius: 1em 0 0 1em;
+        transform: translateX(100%);
+        transition: transform 0.3s;
+        z-index: 1000;
+        display: flex;
+        opacity: 1;
+    }
+    #nav.nav-links.nav-open {
+        transform: translateX(0);
+        box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+    }
+    #nav.nav-links a, #nav.nav-links .nav-divider, #nav.nav-links #profile {
+        margin: 0.5em 0;
+        font-size: 1.5em;
+        align-self: center;
+    }
+    #navbar {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+    }
+    #icon {
+        margin-right: 0.5em;
+    }
+    .nav-divider {
+    background-color: black;
+    width: 60%;
+    height: 0.01em;
+    margin: 1.5em;
+    }
+    #profile {
+        align-self: center;
+    }
+}
