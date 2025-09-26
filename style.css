@@ -5,6 +5,7 @@
     box-sizing: border-box;
 }
 
+<<<<<<< HEAD
 :root {
     --blue: #4669c9;
     --yellow: #ffd650;
@@ -18,6 +19,8 @@ html {
     scroll-behavior: smooth;
 }
 
+=======
+>>>>>>> 9432ccb850b58392fd8c1aefa00215239c63dd2b
 body {
     font-family: prompt, sans-serif;
     background-color: #fff;

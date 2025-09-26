@@ -5,6 +5,7 @@
     box-sizing: border-box;
 }
 
+<<<<<<< HEAD
 :root {
     --blue: #3451a1;
     --yellow: #fecc20;
@@ -12,6 +13,8 @@
     --dark: #19274f;
 }
 
+=======
+>>>>>>> 9432ccb850b58392fd8c1aefa00215239c63dd2b
 body {
     font-family: prompt, sans-serif;
     background-color: #fff;
@@ -239,12 +242,20 @@ body {
 
 #nav a {
     text-decoration: none;
+<<<<<<< HEAD
     color: var(--dark);
+=======
+    color: black;
+>>>>>>> 9432ccb850b58392fd8c1aefa00215239c63dd2b
     margin: 0 0 0 1em;
 }
 
 .nav-divider {
+<<<<<<< HEAD
     background-color: var(--dark);
+=======
+    background-color: black;
+>>>>>>> 9432ccb850b58392fd8c1aefa00215239c63dd2b
     width: .01em;
     height: 2em;
     margin: 1.5em;
@@ -252,7 +263,11 @@ body {
 
 #profile {
     border-width: 1px;
+<<<<<<< HEAD
     border-color: var(--dark);
+=======
+    border-color: black;
+>>>>>>> 9432ccb850b58392fd8c1aefa00215239c63dd2b
     border-style: solid;
     border-radius: 50%;
     width: 3.5em;
@@ -270,6 +285,7 @@ body {
     font-size: 1.5em;
 }
 
+<<<<<<< HEAD
 footer {
     display: flex;
     background-color: var(--dark);
@@ -302,6 +318,8 @@ footer a:hover {
     flex-direction: column;
 }
 
+=======
+>>>>>>> 9432ccb850b58392fd8c1aefa00215239c63dd2b
 @media (max-width: 720px) {
     #burger.burger-menu {
         display: flex;
@@ -343,7 +361,11 @@ footer a:hover {
         margin-right: 0.5em;
     }
     .nav-divider {
+<<<<<<< HEAD
     background-color: var(--dark);
+=======
+    background-color: black;
+>>>>>>> 9432ccb850b58392fd8c1aefa00215239c63dd2b
     width: 60%;
     height: 0.01em;
     margin: 1.5em;
@@ -356,6 +378,10 @@ footer a:hover {
 .vertical-divider {
     width: 50%;
     height: 0.01em;
+<<<<<<< HEAD
     background-color: var(--dark);
+=======
+    background-color: black;
+>>>>>>> 9432ccb850b58392fd8c1aefa00215239c63dd2b
     margin: auto;
 }
