@@ -250,6 +250,16 @@ document.addEventListener('DOMContentLoaded', function() {
   var listings = document.querySelectorAll('.listing');
   sorterButtons.forEach(function(btn) {
     btn.addEventListener('click', function() {
+      // Remove 'active' from all sorter buttons except advanced-sorter-btn
+      sorterButtons.forEach(function(b) {
+        if (!b.classList.contains('advanced-sorter-btn')) {
+          b.classList.remove('active');
+        }
+      });
+      // Add 'active' to the clicked button if not advanced-sorter-btn
+      if (!btn.classList.contains('advanced-sorter-btn')) {
+        btn.classList.add('active');
+      }
       var filterValue = btn.getAttribute('data-filter');
       let visibleIdx = 0;
       listings.forEach(function(listing) {

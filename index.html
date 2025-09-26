@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
     <title>Teedin</title>
-
 </head>
 <body>
     <div id="splash-screen">
@@ -38,7 +37,13 @@
         <div class="featured-slider">
             <img id="featured-image" src="./assets/img/banner-01.jpg" alt="Featured" class="featured-img" />
             <div id="featured-text-container">
-                <div id="featured-text" class="featured-text">Welcome to Teedin - Find Your Dream Property</div>
+                <div id="featured-hero-text" class="featured-hero-text"></div>
+                <div id="featured-text" class="featured-text"></div>
+                <button id="featured-btn" class="featured-btn" onmousedown="showOverlay(true)">ซื้อ/ขาย</button>
+            </div>
+            <div id="buySellOverlay">
+                <div id="buyOverlay" onmousedown="document.getElementById('sorter').scrollIntoView(); showOverlay(false);">ซื้อ</div>
+                <div id="sellOverlay">ขาย</div>
             </div>
         </div>
     </div>
@@ -106,7 +111,21 @@
         <div id="listings" class="listings-grid"></div>
     </div>
     
-        
+    <footer>
+        <div class="footerLeft">
+            <h3>Site map</h3>
+            <a href="">Home</a>
+            <a href="">Browse property</a>
+            <a href="">About teedin</a>
+            <a href="">Login</a>
+        </div>
+        <div class="footerRight">
+            <h3>Contact us</h3>
+            <a href=""><p>hello@teedin.com</p></a>
+            <a href=""><p>Tel. 099-999-9999</p></a>
+            <a href=""><p>1/23, BUF HQ., Big mama road, Wow subdistrict, Bangcock, Thailand, 696969</p></a>
+        </div>
+    </footer>
     </div>
 
     <script src="index.js"></script>
@@ -195,19 +214,28 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        splashScreen.style.display = 'flex';
-        updateProgress();
-        setTimeout(function() {
-            preloadAllImages(function() {
-                splashLoadingText.textContent = 'โหลดเสร็จสิ้น!';
-                splashProgress.style.width = '100%';
-                setTimeout(() => {
-                    splashProgress.style.opacity = '0';
-                    splashLoadingText.style.opacity = '0';
-                    setTimeout(fadeOutSplash, 1000);
-                }, 1000);
-            });
-        }, 2000);
+        // Show splash only on first load
+        if (!sessionStorage.getItem('splashShown')) {
+            splashScreen.style.display = 'flex';
+            updateProgress();
+            setTimeout(function() {
+                preloadAllImages(function() {
+                    splashLoadingText.textContent = 'โหลดเสร็จสิ้น!';
+                    splashProgress.style.width = '100%';
+                    setTimeout(() => {
+                        splashProgress.style.opacity = '0';
+                        splashLoadingText.style.opacity = '0';
+                        setTimeout(function() {
+                            fadeOutSplash();
+                            sessionStorage.setItem('splashShown', '1');
+                        }, 1000);
+                    }, 1000);
+                });
+            }, 2000);
+        } else {
+            splashScreen.style.display = 'none';
+            navbar.style.display = '';
+        }
     });
     </script>
 </body>

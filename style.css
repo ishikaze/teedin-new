@@ -1,5 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --blue: #4669c9;
+    --yellow: #ffd650;
+    --red: #f5655d;
+    --dark: #1a2135;
+}
+
+html {
+    width: 100%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: prompt, sans-serif;
+    background-color: #fff;
+    padding-top: 0em;
+}
+
 #burger.burger-menu {
     display: none;
     flex-direction: column;
@@ -55,12 +79,12 @@
     width: 7em;
     height: 7em;
     object-fit: contain;
-    opacity: 0;
-    animation: splash-logo-fade 0.5s forwards 0.3s;
+    opacity: 1;
 }
 .splash-version {
     font-size: 1em;
-    color: #00000041;
+    color: var(--dark);
+    opacity: 0.2;
     margin-top: 1em;
     opacity: 0;
     animation: splash-version-fade 0.5s forwards 0.2s;
@@ -108,16 +132,7 @@
     from { opacity: 0; transform: translateY(1em); }
     to { opacity: 1; transform: translateY(0); }
 }
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
-body {
-    font-family: prompt, sans-serif;
-    background-color: #fff;
-    padding-top: 0em;
-}
 
 #navbar {
     display: flex;
@@ -126,19 +141,14 @@ body {
     padding: 0.5em 1em;
     height: 5em;
     transition: height 0.3s, padding 0.3s;
-}
-
-#navbar.sticky {
-    position: fixed;
+    position: sticky;
     top: 0;
     left: 0;
-    width: 100vw;
     z-index: 500;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     background: #fff;
-    height: 5em;
-    padding: 0.5em 1em;
 }
+
 
 #icon {
     background-image: url("./assets/img/logo.png");
@@ -157,12 +167,12 @@ body {
 
 #nav a {
     text-decoration: none;
-    color: black;
+    color: var(--dark);
     margin: 0 0 0 1em;
 }
 
 .nav-divider {
-    background-color: black;
+    background-color: var(--dark);
     width: .01em;
     height: 2em;
     margin: 1.5em;
@@ -170,7 +180,7 @@ body {
 
 #profile {
     border-width: 1px;
-    border-color: black;
+    border-color: var(--dark);
     border-style: solid;
     border-radius: 50%;
     width: 3.5em;
@@ -190,7 +200,7 @@ body {
 
 #featured {
     width: 100%;
-    height: 20em;
+    height: 100vh;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -222,7 +232,7 @@ body {
 }
 
 .fade-in-img {
-    opacity: 0.75;
+    opacity: 1;
     transition: opacity 0.6s ease;
 }
 .fade-out-img {
@@ -232,23 +242,86 @@ body {
 
 #featured-text-container {
     position: relative;
-    width: 100%;
-    height: 100%;
+    width: 50%;
+    height: 50%;
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: center;
+    flex-direction: column;
+    padding-bottom: 8em;
     z-index: 2;
 }
 
+.featured-hero-text {
+    color: var(--dark);
+    padding: 0.25em;
+    font-weight: 600;
+    background-color: #FFF;
+    font-size: 2.5em;
+    opacity: 1;
+    margin-bottom: 0.25em;
+    transition: opacity 0.6s, transform 0.6s;
+}
+
+.featured-btn {
+    margin-top: 0.5em;
+    color: var(--blue);
+    padding: 0.25em 2em;
+    font-weight: 900;
+    font-family: Prompt;
+    background-color: #FFF;
+    border-radius: 16px;
+    border: none;
+    font-size: 1em;
+    opacity: 1;
+    margin-bottom: 0.25em;
+    transition: opacity 0.6s, transform 0.6s;
+    cursor: pointer;    
+}
+
 .featured-text {
-    font-size: 1.5em;
     color: white;
+    font-weight: 900;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-    text-align: center;
     font-size: 2em;
     opacity: 1;
-    transform: translateY(0);
     transition: opacity 0.6s, transform 0.6s;
+}
+
+#buySellOverlay {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4em;
+    color: #ffffff;
+    font-weight: 900;
+    z-index: 2;
+    transition:all 0.3s ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#buyOverlay, #sellOverlay {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition:all 0.1s ease-in-out;
+    transition:color 0.5s ease-in-out;
+}
+
+#buyOverlay:hover, #sellOverlay:hover {
+    background-color: #ffffff1e;
 }
 
 .fade-in {
@@ -270,6 +343,7 @@ body {
 
 
 #sorter {
+    scroll-margin-top: 5em;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 0;
@@ -291,7 +365,7 @@ body {
     margin: 0.5em;
     padding: 0.5em 0;
     background-color: #FFF;
-    color: black;
+    color: var(--dark);
     border: 1px solid #000000;
     padding: .5em;
     margin: .5em;
@@ -515,7 +589,7 @@ body {
 .vertical-divider {
     width: 50%;
     height: 0.01em;
-    background-color: black;
+    background-color: var(--dark);
     margin: auto;
 }
 
@@ -526,6 +600,38 @@ body {
     font-size: 2em;
     color: #000000;
     font-weight: 600;
+}
+
+footer {
+    display: flex;
+    background-color: var(--dark);
+    color: #eee;
+}
+
+footer h3 {
+    color: white;
+    font-weight: 500;
+}
+
+footer a {
+    text-decoration: none;
+    color: white;
+    opacity: 0.7;
+    font-weight: 200;
+}
+
+footer a:hover {
+    text-decoration: underline;
+    color: var(--yellow);
+    opacity: 0.7;
+}
+
+.footerLeft, .footerRight {
+    width: 50%;
+    height: 100%;
+    padding: 4em 2em 2em 2em;
+    display: flex;
+    flex-direction: column;
 }
 
 @media (max-width: 720px) {
@@ -569,7 +675,7 @@ body {
         margin-right: 0.5em;
     }
     .nav-divider {
-    background-color: black;
+    background-color: var(--dark);
     width: 60%;
     height: 0.01em;
     margin: 1.5em;
