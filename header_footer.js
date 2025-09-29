@@ -10,7 +10,7 @@ const pathname = url.pathname;
 const pathSegments = pathname.split('/');
 const filteredSegments = pathSegments.filter(segment => segment !== ''); 
 
-const pathDepth = filteredSegments.length; 
+const pathDepth = filteredSegments.length - 1; 
 
 let exitPath = './'
 
