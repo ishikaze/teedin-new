@@ -5,7 +5,6 @@
     box-sizing: border-box;
 }
 
-<<<<<<< HEAD
 :root {
     --blue: #4669c9;
     --yellow: #ffd650;
@@ -24,6 +23,7 @@ body {
     font-family: prompt, sans-serif;
     background-color: #fff;
     padding-top: 0em;
+    min-height: 100vh;
 }
 
 #burger.burger-menu {
@@ -290,6 +290,38 @@ body {
     transition: opacity 0.6s, transform 0.6s;
 }
 
+.header-img {
+    position: relative;
+    width: 100%;
+    height: 20em;
+    background-size: cover;
+    background-image: url(./assets/img/banner-04.jpg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#location-dropdown {
+    z-index: 2;
+}
+
+.blur {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+#header-text {
+    color: #FFFFFF;
+    font-size: 3em;
+    z-index: 2;
+}
+
 #buySellOverlay {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -318,12 +350,13 @@ body {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition:all 0.1s ease-in-out;
-    transition:color 0.5s ease-in-out;
+    transition:all 0.2s ease-in-out;
+    text-shadow: 0px 6px 20px rgba(0,0,0,1);
 }
 
 #buyOverlay:hover, #sellOverlay:hover {
     background-color: #ffffff1e;
+    font-size: larger;
 }
 
 .fade-in {
@@ -346,46 +379,44 @@ body {
 
 #sorter {
     scroll-margin-top: 5em;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 0;
+    display: flex;
+    background-color: #d6d6d6;
+    gap: 0em;
     padding: 1em;
     justify-items: stretch;
     align-items: stretch;
+    width: 90vw;
+    margin: auto;
+    border-radius: 16px;
 }
 
 .sorter-button {
     min-width: 0;
     max-width: none;
-    width: 90%;
     height: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 0.5em;
-    padding: 0.5em 0;
-    background-color: #FFF;
+    margin: 0.2em;
+    padding: 0.5em 1em;
     color: var(--dark);
-    border: 1px solid #000000;
-    padding: .5em;
-    margin: .5em;
     cursor: pointer;
     transition: background-color 0.3s;
     border-radius: 1em;
 }
 
 .sorter-button.active {
-    background-color: #222;
-    color: #fff;
-    border-color: #222;
+    background-color: #afafaf;
+    color: #000000;
 }
 
 .advanced-sorter-btn {
-    background-color: #f5f5f5;
     color: #222;
     border-color: #888;
+    margin-left: auto;
+    border: 1px #000 solid;
 }
 .advanced-sorter-btn:hover {
     background-color: #e0e0e0;
@@ -453,7 +484,7 @@ body {
 }
 
 .sorter-button i {
-    font-size: 2em;
+    font-size: 0;
     margin-bottom: 0.25em;
 }
 
@@ -497,7 +528,8 @@ body {
 #listings-container {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
+    padding: 1em;
     width: 100%;
     margin: 0 auto;
 }
@@ -595,15 +627,6 @@ body {
     margin: auto;
 }
 
-#header-text {
-    width: 100%;
-    padding: 1em;
-    text-align: center;
-    font-size: 2em;
-    color: #000000;
-    font-weight: 600;
-}
-
 footer {
     display: flex;
     background-color: var(--dark);
@@ -634,6 +657,73 @@ footer a:hover {
     padding: 4em 2em 2em 2em;
     display: flex;
     flex-direction: column;
+}
+
+.loader-container {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    pointer-events: none;
+}
+
+#loader {
+    background-color: #FFF;
+    padding: 4em 2.75em 3em 2.75em;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 1px 6px 45px -9px rgba(0,0,0,0.83);
+    -webkit-box-shadow: 1px 6px 45px -9px rgba(0,0,0,0.83);
+    -moz-box-shadow: 1px 6px 45px -9px rgba(0,0,0,0.83);
+    transform: scale(0);
+    opacity: 0;
+    transition: transform 0.25s ease-out, opacity 0.5s ease-out;
+}
+
+.loader {
+  width: 50px;
+  height: 28px;
+  --_g: no-repeat radial-gradient(farthest-side,#000 94%,#0000);
+  background:
+    var(--_g) 50%  0,
+    var(--_g) 100% 0;
+  background-size: 12px 12px;
+  position: relative;
+  animation: l23-0 1.5s linear infinite;
+}
+.loader:before {
+  content: "";
+  position: absolute;
+  height: 12px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #000;
+  left:0;
+  top:0;
+  animation: 
+    l23-1 1.5s linear infinite,
+    l23-2 0.5s cubic-bezier(0,200,.8,200) infinite;
+}
+@keyframes l23-0 {
+  0%,31%  {background-position: 50% 0   ,100% 0}
+  33%     {background-position: 50% 100%,100% 0}
+  43%,64% {background-position: 50% 0   ,100% 0}
+  66%     {background-position: 50% 0   ,100% 100%}
+  79%     {background-position: 50% 0   ,100% 0}
+  100%    {transform:translateX(calc(-100%/3))}
+}
+@keyframes l23-1 {
+  100% {left:calc(100% + 7px)}
+}
+@keyframes l23-2 {
+  100% {top:-0.1px}
 }
 
 @media (max-width: 720px) {
@@ -684,5 +774,8 @@ footer a:hover {
     }
     #profile {
         align-self: center;
+    }
+    #buySellOverlay {
+        flex-direction: column;
     }
 }

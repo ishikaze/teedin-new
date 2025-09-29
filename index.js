@@ -23,7 +23,7 @@ const texts = [
 const textColors = [
 	'#FFF',
 	'#FFF',
-	'#000',
+	'#FFF',
 	'#FFF',
 	'#FFF'
 ]

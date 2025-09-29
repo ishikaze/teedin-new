@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+    <link rel="stylesheet" href="../../style.css">
+    <style>
+    .property-details-container {
+        width: 80vw;
+        margin: auto;
+        background: #fff;
+        padding: 3em;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .property-details-left {
+        width: 70%;
+        min-height: 10em;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: auto;
+    }
+    .property-details-right {
+        width: 30%;
+        min-height: 1em;
+        margin-bottom: auto;
+        display: flex;
+        flex-direction: column;
+    }
+    .property-img-container {
+        width: 100%;
+        margin: 0 0 1em 0;
+        height: auto;
+        height: max-content;
+        background-size: cover;;
+    }
+    .property-img-container img {
+        width: 100%;
+        border-radius: 16px;
+    }
+    .actions-container {
+        display: flex;
+        gap: 1em;
+        width: 100%;
+        height: 7em;
+        margin: 0 0 1em 0;
+    }
+    .property-owner-container {
+        width: 70%;
+        height: 100%;
+        display: flex;
+        gap: 1em;
+        background-color: rgb(233, 233, 233);
+        border-radius: 16px;
+        padding: 1em;
+    }
+    .property-owner-pfp {
+        background-color: rgb(255, 255, 255);
+        width: 5em;
+        height: 5em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+    }
+    .property-owner-pfp i {
+        font-size: 2.5em;
+    }
+    .property-owner-details {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .property-owner-details p {
+        font-size: 0.8em;
+    }
+    .property-owner-stats {
+        width: 100%;
+        display: flex;
+        gap: 1em;
+    }
+    .property-owner-stats p {
+        font-size: 0.7em;
+    }
+    .chat {
+        width: 5em;
+        height: 5em;
+        background-color: rgb(233, 233, 233);;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-left: auto;
+        border-radius: 16px;
+        transition: all 0.25s ease-in-out;
+        cursor: pointer;
+    }
+    .chat:hover {
+        background-color: #FFFFFF;
+        transform: scale(1.1);
+    }
+    .chat i {
+        font-size: 1.5em;
+    }
+    .chat p {
+        font-size: 0.75em;
+    }
+    .book-tour {
+        width: 30%;
+        height: 100%;
+        border-radius: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5em;
+        font-size: 1.5em;
+        background-color: rgb(233, 233, 233);
+        cursor: pointer;
+    }
+    hr {
+        height: 0.01em;
+        background-color: black;
+        opacity: 0.5;
+        border: none;
+        margin: 0.5em 0 1em 0;
+    }
+    .extra-details-container {
+        width: 100%;
+        height: auto;
+        padding: 0 0 0 1em;
+        margin: 0 0 0 1em;
+        background-color: rgb(255, 255, 255);
+        border-radius: 16px;
+        display: flex;
+        flex-direction: column;
+    }
+    .detail-card {
+        display: flex;
+        gap: 1em;
+        padding: 1em;
+        margin: 0.5em 0;
+        border-radius: 16px;
+        background-color: rgb(233, 233, 233);
+        /* box-shadow: -2px 2px 12px -7px rgba(0,0,0,0.75);
+        -webkit-box-shadow: -2px 2px 12px -7px rgba(0,0,0,0.75);
+        -moz-box-shadow: -2px 2px 12px -7px rgba(0,0,0,0.75); */
+    }
+    .map-card {
+        display: flex;
+        margin: 0.5em 0;
+        overflow: hidden;
+        border-radius: 16px;
+        background-color: rgb(233, 233, 233);
+        /* box-shadow: -2px 2px 12px -7px rgba(0,0,0,0.75);
+        -webkit-box-shadow: -2px 2px 12px -7px rgba(0,0,0,0.75);
+        -moz-box-shadow: -2px 2px 12px -7px rgba(0,0,0,0.75); */
+    }
+    </style>
+    <title>Property Details</title>
+</head>
+<body>
+    <div id="property-details" class="property-details-container">
+    </div>
+    </div>
+        <a href="../index.html" style="display:inline-block;margin-top:2em; color:#222; text-decoration:none; font-weight:500;">&larr; กลับไปหน้าหลัก</a>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var data = localStorage.getItem('selectedListing');
+        if (!data) {
+            document.getElementById('property-details').innerHTML = '<p>ไม่พบข้อมูลอสังหาริมทรัพย์</p>';
+            return;
+        }
+        var listing = JSON.parse(data);
+        var html = `<div class="property-details-left">
+            <div class="property-img-container">
+                <img src="${listing.img.replace('./assets/', '../../assets/')}">
+            </div>
+
+            <div class="actions-container">
+                <div class="property-owner-container">
+                    <div class="property-owner-pfp">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div class="property-owner-details">
+                        <h2>User</h2>
+                        <p>Last seen: 0 minutes ago</p>
+                        <div class="property-owner-stats">
+                            <p>0 property sold</p>
+                            <p>0 user reviews</p>
+                        </div>
+                    </div>
+                    <div class="chat">
+                        <i class="fa-solid fa-comments-dollar"></i>
+                        <p>Chat</p>
+                    </div>
+                </div>
+                <div class="book-tour">
+                    <i class="fa-solid fa-calendar-day"></i>
+                    <p>Book a tour</p>
+                </div>
+            </div>
+
+            <div class="proptery-description">
+                <h1>${listing.title}</h3>
+                    <hr>
+                <p>${listing.description}</p>
+            </div>
+        </div>
+
+        <div class="property-details-right">
+            <div class="extra-details-container">
+                <div class="detail-card">
+                    <div class="deatil-icon">
+                        <i class="fa-solid fa-tag"></i>
+                    </div>
+                    <p>${listing.price.toLocaleString()} บาท</p>
+                </div>
+                <div class="detail-card">
+                    <div class="deatil-icon">
+                        <i class="fa-solid fa-ruler-combined"></i>
+                    </div>
+                    <p>${listing.area} ตร.ม</p>
+                </div>
+                <div class="detail-card">
+                    <div class="deatil-icon">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <p>${listing.location}</p>
+                </div>
+                <div class="detail-card">
+                    <div class="deatil-icon">
+                        <i class="fa-solid fa-bed"></i>
+                    </div>
+                    <p>${listing.bedrooms || 0} ห้องนอน</p>
+                </div>
+                <div class="detail-card">
+                    <div class="deatil-icon">
+                        <i class="fa-solid fa-bath"></i>
+                    </div>
+                    <p>${listing.bathrooms || 0} ห้องน้ำ</p>
+                </div>
+                <div class="detail-card">
+                    <div class="deatil-icon">
+                        <i class="fa-solid fa-square-parking"></i>
+                    </div>
+                    <p>ที่จอดรถ ${listing.parking || 0} ที่</p>
+                </div>
+                <div class="detail-card">
+                    <div class="deatil-icon">
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </div>
+                    <p> ${"สร้างปี " + listing.year || "ไม่มีสิ่งก่อสร้าง"}</p>
+                </div>
+                <div class="map-card">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.2847050000003!2d144.9630576153177!3d-37.81410717975149!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11c5f3%3A0x504567846294ce0!2sMelbourne%20VIC%2C%20Australia!5e0!3m2!1sen!2sus!4v1678886400000!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>`;
+        document.getElementById('property-details').innerHTML = html;
+    });
+    </script>
+    <script src="../../header_footer.js"></script>
+</body>
+</html>

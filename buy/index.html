@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../style.css">
+    <title>Teedin</title>
+</head>
+
+<body>
+    <div class="header-img">
+        <div class="blur"></div>
+        <h2 id="header-text">ซื้อที่ดิน</h2>
+        <label for="location-dropdown">เลือกที่ตั้ง:</label>
+        <select id="location-dropdown" style="padding:0.3em 1em; border-radius:0.3em; border:1px solid #ccc; font-size:1em;">
+            <option value="">ทั้งหมด</option>
+        </select>
+    </div>
+
+    <div id="listings-container"> 
+        <div id="sorter">
+            <div class="sorter-button active" data-filter="*"> 
+                <i class="fa-solid fa-border-all"></i>
+                <p>ทั้งหมด</p>
+            </div>
+            <div class="sorter-button" data-filter=".house"> 
+                <i class="fa-regular fa-house"></i>
+                <p>บ้าน</p>
+            </div>
+            <div class="sorter-button" data-filter=".apartment"> 
+                <i class="fa-regular fa-building"></i>
+                <p>อพาร์ทเมนต์</p>
+            </div>
+            <div class="sorter-button" data-filter=".villa"> 
+                <i class="fa-solid fa-umbrella-beach"></i>
+                <p>วิลล่า</p>
+            </div>
+            <div class="sorter-button" data-filter=".land"> 
+                <i class="fa-regular fa-map"></i>
+                <p>ที่ดิน</p>
+            </div>
+            <div class="sorter-button advanced-sorter-btn" id="advanced-sorter-btn"> 
+                <i class="fa-solid fa-sliders"></i>
+                <p>ขั้นสูง</p>
+            </div>
+            <div id="advanced-sorter-popup" class="advanced-sorter-popup" style="display:none;">
+                <div class="advanced-sorter-content">
+                    <h3>ตัวกรองขั้นสูง</h3>
+                    <p>เรียงตาม:</p>
+                    <button class="adv-sort" data-sort="price-asc">ราคาต่ำสุด</button>
+                    <button class="adv-sort" data-sort="price-desc">ราคาสูงสุด</button>
+                    <div style="margin:1em 0;">
+                        <label>ช่วงราคา (ต่ำสุด - สูงสุด):</label><br>
+                        <div style="display:flex;align-items:center;gap:1em;">
+                            <span id="min-price-label">0</span>
+                            <input type="range" id="min-price-slider" min="0" max="15000000" step="100000" value="0">
+                            <span id="max-price-label">15,000,000</span>
+                            <input type="range" id="max-price-slider" min="0" max="15000000" step="100000" value="15000000">
+                        </div>
+                    </div>
+                    <div style="margin:1em 0;">
+                        
+                    </div>
+                    <div style="display:flex;gap:1em;justify-content:center;margin-top:1em;">
+                        <button id="apply-adv-filters">ตกลง</button>
+                        <button id="clear-adv-filters">ล้างตัวกรอง</button>
+                    </div>
+                    <button id="close-adv-sorter" style="margin-top:1em;">ปิด</button>
+                </div>
+            </div>
+        </div>
+        <div id="listings" class="listings-grid"></div>
+    </div>
+    <script src="./listings.js"></script>
+    <script src="../header_footer.js"></script>
+</body>

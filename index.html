@@ -7,32 +7,18 @@
     <link rel="stylesheet" href="style.css">
     <title>Teedin</title>
 </head>
-<body>
+<body style="background-color: var(--dark);">
     <div id="splash-screen">
         <div class="splash-center">
             <img src="./assets/img/logo.png" alt="Teedin Logo" class="splash-logo">
-            <div class="splash-version">v0.2</div>
+            <div class="splash-version">v0.5</div>
         </div>
         <div class="splash-progress-container">
             <div class="splash-progress-bar"><div class="splash-progress"></div></div>
             <div class="splash-loading-text">กำลังโหลดรูปภาพ...</div>
         </div>
     </div>
-    <div id="navbar" style="display:none;">
-        <div id="icon"></div>
-        <div id="burger" class="burger-menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <div id="nav" class="nav-links">
-            <a href="./">Home</a>
-            <a href="./about">About</a>
-            <a href="./contact">Contact</a>
-            <div class="nav-divider"></div>
-            <div id="profile"><i class="fa-solid fa-user"></i></div>
-        </div>
-    </div>
+    
     <div id="featured">
         <div class="featured-slider">
             <img id="featured-image" src="./assets/img/banner-01.jpg" alt="Featured" class="featured-img" />
@@ -42,117 +28,23 @@
                 <button id="featured-btn" class="featured-btn" onmousedown="showOverlay(true)">ซื้อ/ขาย</button>
             </div>
             <div id="buySellOverlay">
-                <div id="buyOverlay" onmousedown="document.getElementById('sorter').scrollIntoView(); showOverlay(false);">ซื้อ</div>
+                <div id="buyOverlay" onmousedown="redirect('./buy')">ซื้อ</div>
                 <div id="sellOverlay">ขาย</div>
             </div>
         </div>
     </div>
 
-    <div class="vertical-divider"></div>
-    <h2 id="header-text">ทำเลที่ดิน เราคิดค่าคอมมิชชั่นเพียง 5% ของเงินที่ขายได้เท่านั้น</h2>
-    <div class="vertical-divider"></div>
-
-    <div id="sorter">
-    <div class="sorter-button active" data-filter="*"> 
-            <i class="fa-solid fa-border-all"></i>
-            <p>ทั้งหมด</p>
-        </div>
-        <div class="sorter-button" data-filter=".house"> 
-            <i class="fa-regular fa-house"></i>
-            <p>บ้าน</p>
-        </div>
-        <div class="sorter-button" data-filter=".apartment"> 
-            <i class="fa-regular fa-building"></i>
-            <p>อพาร์ทเมนต์</p>
-        </div>
-        <div class="sorter-button" data-filter=".villa"> 
-            <i class="fa-solid fa-umbrella-beach"></i>
-            <p>วิลล่า</p>
-        </div>
-        <div class="sorter-button" data-filter=".land"> 
-            <i class="fa-regular fa-map"></i>
-            <p>ที่ดิน</p>
-        </div>
-        <div class="sorter-button advanced-sorter-btn" id="advanced-sorter-btn"> 
-            <i class="fa-solid fa-sliders"></i>
-            <p>ขั้นสูง</p>
-        </div>
-        <div id="advanced-sorter-popup" class="advanced-sorter-popup" style="display:none;">
-            <div class="advanced-sorter-content">
-                <h3>ตัวกรองขั้นสูง</h3>
-                <p>เรียงตาม:</p>
-                <button class="adv-sort" data-sort="price-asc">ราคาต่ำสุด</button>
-                <button class="adv-sort" data-sort="price-desc">ราคาสูงสุด</button>
-                <div style="margin:1em 0;">
-                    <label>ช่วงราคา (ต่ำสุด - สูงสุด):</label><br>
-                    <div style="display:flex;align-items:center;gap:1em;">
-                        <span id="min-price-label">0</span>
-                        <input type="range" id="min-price-slider" min="0" max="15000000" step="100000" value="0">
-                        <span id="max-price-label">15,000,000</span>
-                        <input type="range" id="max-price-slider" min="0" max="15000000" step="100000" value="15000000">
-                    </div>
-                </div>
-                <div style="margin:1em 0;">
-                    <label for="location-dropdown">เลือกที่ตั้ง:</label>
-                    <select id="location-dropdown" style="padding:0.3em 1em; border-radius:0.3em; border:1px solid #ccc; font-size:1em;">
-                        <option value="">ทั้งหมด</option>
-                    </select>
-                </div>
-                <div style="display:flex;gap:1em;justify-content:center;margin-top:1em;">
-                    <button id="apply-adv-filters">ตกลง</button>
-                    <button id="clear-adv-filters">ล้างตัวกรอง</button>
-                </div>
-                <button id="close-adv-sorter" style="margin-top:1em;">ปิด</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="listings-container"> 
-        <div id="listings" class="listings-grid"></div>
-    </div>
-    
-    <footer>
-        <div class="footerLeft">
-            <h3>Site map</h3>
-            <a href="">Home</a>
-            <a href="">Browse property</a>
-            <a href="">About teedin</a>
-            <a href="">Login</a>
-        </div>
-        <div class="footerRight">
-            <h3>Contact us</h3>
-            <a href=""><p>hello@teedin.com</p></a>
-            <a href=""><p>Tel. 099-999-9999</p></a>
-            <a href=""><p>1/23, BUF HQ., Big mama road, Wow subdistrict, Bangcock, Thailand, 696969</p></a>
-        </div>
-    </footer>
-    </div>
 
     <script src="index.js"></script>
-    <script src="listings.js"></script>
+    <script src="header_footer.js"></script>
     <script>
+    
     const splashScreen = document.getElementById('splash-screen');
     const splashLogo = document.querySelector('.splash-logo');
     const splashVersion = document.querySelector('.splash-version');
     const splashProgress = document.querySelector('.splash-progress');
     const splashLoadingText = document.querySelector('.splash-loading-text');
     const navbar = document.getElementById('navbar');
-
-    // Burger menu logic
-    const burger = document.getElementById('burger');
-    const navLinks = document.getElementById('nav');
-    if (burger && navLinks) {
-        burger.addEventListener('click', function() {
-            burger.classList.toggle('open');
-            navLinks.classList.toggle('nav-open');
-        });
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 720) {
-                burger.classList.remove('open');
-                navLinks.classList.remove('nav-open');
-            }
-        });
-    }
 
     // preload list UPDATE IF THERES NEW PICTURE
     const preloadImages = [
@@ -234,9 +126,11 @@
             }, 2000);
         } else {
             splashScreen.style.display = 'none';
+            
             navbar.style.display = '';
         }
     });
+
     </script>
 </body>
 </html>
