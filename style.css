@@ -18,12 +18,21 @@ html {
     scroll-behavior: smooth;
 }
 
-
 body {
     font-family: prompt, sans-serif;
     background-color: #fff;
     padding-top: 0em;
     min-height: 100vh;
+}
+
+select {
+    height: 3em;
+    width: 10em;
+    transition: all 0.1s ease-in-out;
+}
+
+select:hover {
+    transform: scale(1.1);
 }
 
 #burger.burger-menu {
@@ -171,6 +180,7 @@ body {
     text-decoration: none;
     color: var(--dark);
     margin: 0 0 0 1em;
+    cursor: pointer;
 }
 
 .nav-divider {
@@ -292,14 +302,18 @@ body {
 
 .header-img {
     position: relative;
-    width: 100vw;
-    height: 100vh;
     background-size: cover;
     background-image: url(./assets/img/banner-04.jpg);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+#header-img {
+    width: 100vw;
+    height: 100vh;
+    transition: all 0.5s ease-in-out;
     padding-bottom: 8em;
 }
 
@@ -321,6 +335,7 @@ body {
     color: #FFFFFF;
     font-size: 3em;
     z-index: 2;
+    transition: all 0.1s ease-in-out;
 }
 
 #buySellOverlay {
@@ -675,17 +690,16 @@ footer a:hover {
 
 #loader {
     background-color: #FFF;
-    padding: 4em 2.75em 3em 2.75em;
-    border-radius: 16px;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     box-shadow: 1px 6px 45px -9px rgba(0,0,0,0.83);
     -webkit-box-shadow: 1px 6px 45px -9px rgba(0,0,0,0.83);
     -moz-box-shadow: 1px 6px 45px -9px rgba(0,0,0,0.83);
-    transform: scale(0);
     opacity: 0;
-    transition: transform 0.25s ease-out, opacity 0.5s ease-out;
+    transition: transform 0.25s ease-out, opacity 0.25s ease-out;
 }
 
 .loader {

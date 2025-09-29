@@ -1,3 +1,5 @@
+let curloc
+
 const listingsData = [
   {
     type: 'house', price: 3500000, area: 120, img: './assets/img/property-01.jpg', title: 'บ้านเดี่ยว 3 ห้องนอน', location: 'กรุงเทพฯ', bedrooms: 3, bathrooms: 2, parking: 2, year: 2018, description: 'บ้านเดี่ยวสวยพร้อมอยู่ ใกล้รถไฟฟ้าและห้างสรรพสินค้า'
@@ -62,13 +64,14 @@ function renderListings(data) {
         const idx = parseInt(listing.getAttribute('data-idx'));
         const data = currentFilteredListings[idx]; // Use currentFilteredListings
         localStorage.setItem('selectedListing', JSON.stringify(data));
-        window.location.href = './property/index.html';
+        redirect('./property')
       });
     });
   }, 100);
 }
 
 function applyFiltersAndSort() {
+  shrinkHeader()
   let filteredAndSorted = [...listingsData];
 
   const activeTypeButton = document.querySelector('.sorter-button.active:not(#advanced-sorter-btn)');
@@ -88,9 +91,12 @@ function applyFiltersAndSort() {
   const maxPrice = parseInt(document.getElementById('max-price-slider').value) || Infinity;
   filteredAndSorted = filteredAndSorted.filter(l => l.price >= minPrice && l.price <= maxPrice);
 
+  setHeaderText("ซื้อที่ดิน")
   const selectedLocation = document.getElementById('location-dropdown').value;
   if (selectedLocation) {
     filteredAndSorted = filteredAndSorted.filter(l => l.location === selectedLocation);
+    curloc = selectedLocation;
+    setHeaderText("ซื้อที่ดินจังหวัด" + curloc)
   }
 
   const activeSortButton = document.querySelector('.adv-sort.active');

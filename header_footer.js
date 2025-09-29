@@ -1,5 +1,22 @@
 const loaderDiv = document.createElement('div')
 const loaderContainer = document.createElement('div')
+const currentUrl = window.location.href;
+const bareUrl = window.location.protocol + "//" + window.location.host
+
+const urlString = currentUrl;
+const url = new URL(urlString);
+const pathname = url.pathname; 
+
+const pathSegments = pathname.split('/');
+const filteredSegments = pathSegments.filter(segment => segment !== ''); 
+
+const pathDepth = filteredSegments.length; 
+
+let exitPath = './'
+
+for (let i = pathDepth; i > 0; i--) {
+    exitPath += '../'
+}
 
 loaderDiv.id = 'loader'
 loaderContainer.classList.add('loader-container')
@@ -25,9 +42,9 @@ function renderHeader() {
             <span></span>
         </div>
         <div id="nav" class="nav-links">
-            <a href="../../">Home</a>
-            <a href="../buy">Buy</a>
-            <a href="../sell">Sell</a>
+            <a onmousedown="redirect('${exitPath}')">Home</a>
+            <a onmousedown="redirect('${exitPath}buy')">Buy</a>
+            <a onmousedown="redirect('${exitPath}sell')">Sell</a>
             <div class="nav-divider"></div>
             <div id="profile"><i class="fa-solid fa-user"></i></div>
         </div>`
@@ -116,16 +133,22 @@ renderHeader()
 
 function showLoader(value) {
     if (value) {
-        loader.style.transform = 'scale(1)'
+        // loader.style.transform = 'scale(1)'
         loader.style.opacity = 1
+        document.body.style.pointerEvents = 'none'
     } else {
-        loader.style.transform = 'scale(0)'
+        // loader.style.transform = 'scale(0)'
         loader.style.opacity = 0
+        document.body.style.pointerEvents = 'auto'
     }
 }
 
 function redirect(to) {
     showLoader(true)
-    setTimeout(() => {window.location.href = to}, 1000);
+    setTimeout(() => {window.location.href = to}, 250);
 }
 
+showLoader(true)
+window.onload = function() {
+  showLoader(false)
+};

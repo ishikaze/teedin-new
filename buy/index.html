@@ -9,11 +9,12 @@
 </head>
 
 <body>
-    <div class="header-img">
+    <div class="header-img" id="header-img">
         <div class="blur"></div>
         <h2 id="header-text">ซื้อที่ดิน</h2>
         <label for="location-dropdown">เลือกที่ตั้ง:</label>
         <select id="location-dropdown" style="padding:0.3em 1em; border-radius:0.3em; border:1px solid #ccc; font-size:1em;">
+            <option disabled selected value="">เลือกจังหวัด</option>
             <option value="">ทั้งหมด</option>
         </select>
     </div>
@@ -74,4 +75,5 @@
     </div>
     <script src="./listings.js"></script>
     <script src="../header_footer.js"></script>
+    <script src="./intro.js"></script>
 </body>
