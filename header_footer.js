@@ -11,6 +11,8 @@ document.body.appendChild(loaderContainer)
 
 const loader = document.getElementById('loader')
 
+console.log(window.location.cru)
+
 function renderHeader() {
     const body = document.body
     const firstChild = body.firstChild; 

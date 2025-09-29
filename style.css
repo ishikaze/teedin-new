@@ -292,14 +292,15 @@ body {
 
 .header-img {
     position: relative;
-    width: 100%;
-    height: 20em;
+    width: 100vw;
+    height: 100vh;
     background-size: cover;
     background-image: url(./assets/img/banner-04.jpg);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-bottom: 8em;
 }
 
 #location-dropdown {

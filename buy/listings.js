@@ -56,7 +56,6 @@ function renderListings(data) {
   });
   listingsDiv.innerHTML = html;
 
-  // Add click listeners to newly rendered listings
   setTimeout(() => {
     document.querySelectorAll('.listing').forEach(listing => {
       listing.addEventListener('click', function() {
@@ -72,35 +71,28 @@ function renderListings(data) {
 function applyFiltersAndSort() {
   let filteredAndSorted = [...listingsData];
 
-  // Apply type filter from sorter buttons
-  // Only consider buttons that are NOT the advanced sorter button
   const activeTypeButton = document.querySelector('.sorter-button.active:not(#advanced-sorter-btn)');
   
-  if (activeTypeButton) { // Ensure a type filter button is active
+  if (activeTypeButton) { 
     const filterData = activeTypeButton.getAttribute('data-filter');
-    if (filterData && filterData !== '*') { // Only slice if it's a specific type filter
+    if (filterData && filterData !== '*') { 
       const filterValue = filterData.slice(1);
       filteredAndSorted = filteredAndSorted.filter(l => l.type === filterValue);
     }
-    // If filterData is '*', no filtering by type is needed (already handled by default)
   } else {
-    // If no specific type button is active, assume "All" (no type filtering)
-    // This scenario should ideally not happen if "All" is active by default.
+
   }
 
 
-  // Apply advanced price range filter
   const minPrice = parseInt(document.getElementById('min-price-slider').value) || 0;
   const maxPrice = parseInt(document.getElementById('max-price-slider').value) || Infinity;
   filteredAndSorted = filteredAndSorted.filter(l => l.price >= minPrice && l.price <= maxPrice);
 
-  // Apply advanced location filter
   const selectedLocation = document.getElementById('location-dropdown').value;
   if (selectedLocation) {
     filteredAndSorted = filteredAndSorted.filter(l => l.location === selectedLocation);
   }
 
-  // Apply advanced sorting
   const activeSortButton = document.querySelector('.adv-sort.active');
   if (activeSortButton) {
     const sortType = activeSortButton.getAttribute('data-sort');
@@ -113,7 +105,7 @@ function applyFiltersAndSort() {
     }
   }
 
-  currentFilteredListings = filteredAndSorted; // Update global variable
+  currentFilteredListings = filteredAndSorted;
   renderListings(currentFilteredListings);
 }
 
@@ -126,20 +118,19 @@ document.addEventListener('DOMContentLoaded', function() {
   const minLabel = document.getElementById('min-price-label');
   const maxLabel = document.getElementById('max-price-label');
   const locationDropdown = document.getElementById('location-dropdown');
-  const sorterButtons = document.querySelectorAll('.sorter-button'); // Includes advanced button
-  const typeFilterButtons = document.querySelectorAll('.sorter-button:not(#advanced-sorter-btn)'); // Only type buttons
+  const sorterButtons = document.querySelectorAll('.sorter-button'); 
+  const typeFilterButtons = document.querySelectorAll('.sorter-button:not(#advanced-sorter-btn)'); 
   const advSortButtons = document.querySelectorAll('.adv-sort');
   const clearAdvFiltersBtn = document.getElementById('clear-adv-filters');
 
-  // Initialize sorter buttons: Ensure "All" is active and adv button is not
+
   if (advBtn) advBtn.classList.remove('active');
   const allButton = document.querySelector('.sorter-button[data-filter="*"]');
   if (allButton) {
-    typeFilterButtons.forEach(btn => btn.classList.remove('active')); // Remove active from any type button
-    allButton.classList.add('active'); // Set "All" as active
+    typeFilterButtons.forEach(btn => btn.classList.remove('active'));
+    allButton.classList.add('active');
   }
 
-  // Populate location dropdown
   if (locationDropdown) {
     const locations = Array.from(new Set(listingsData.map(l => l.location))).sort((a, b) => a.localeCompare(b, 'th'));
     locations.forEach(loc => {
@@ -150,7 +141,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Price slider formatting
   function formatPrice(val) {
     return parseInt(val).toLocaleString();
   }
@@ -166,19 +156,18 @@ document.addEventListener('DOMContentLoaded', function() {
         maxSlider.value = minSlider.value;
       }
       syncSliderLabels();
-      applyFiltersAndSort(); // Update on slider change
+      applyFiltersAndSort();
     });
     maxSlider.addEventListener('input', function() {
       if (parseInt(maxSlider.value) < parseInt(minSlider.value)) {
         minSlider.value = maxSlider.value;
       }
       syncSliderLabels();
-      applyFiltersAndSort(); // Update on slider change
+      applyFiltersAndSort(); 
     });
     syncSliderLabels();
   }
 
-  // Advanced sorter popup functionality
   if (advBtn && advPopup && closeAdv) {
     advBtn.addEventListener('click', function(e) {
       e.stopPropagation();
@@ -192,45 +181,44 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Event listeners for basic type sorter buttons
-  typeFilterButtons.forEach(button => { // Use specific type filter buttons
+  typeFilterButtons.forEach(button => { 
     button.addEventListener('click', function() {
-      typeFilterButtons.forEach(btn => btn.classList.remove('active')); // Remove active from other type buttons
-      advBtn.classList.remove('active'); // Ensure advanced button is not active
-      this.classList.add('active'); // Activate clicked type button
+      typeFilterButtons.forEach(btn => btn.classList.remove('active')); 
+      advBtn.classList.remove('active'); 
+      this.classList.add('active'); 
       applyFiltersAndSort();
     });
   });
 
-  // Event listeners for advanced sorting buttons
+
   advSortButtons.forEach(button => {
     button.addEventListener('click', function() {
       advSortButtons.forEach(btn => btn.classList.remove('active'));
       this.classList.add('active');
-      applyFiltersAndSort(); // Update on sort change
+      applyFiltersAndSort(); 
     });
   });
 
-  // Event listener for location dropdown
+
   if (locationDropdown) {
     locationDropdown.addEventListener('change', function() {
-      applyFiltersAndSort(); // Update on location change
+      applyFiltersAndSort(); 
     });
   }
 
-  // Clear advanced filters
+  
   if (clearAdvFiltersBtn) {
     clearAdvFiltersBtn.addEventListener('click', function() {
       document.getElementById('min-price-slider').value = 0;
       document.getElementById('max-price-slider').value = 15000000;
       document.getElementById('location-dropdown').value = '';
       syncSliderLabels();
-      advSortButtons.forEach(btn => btn.classList.remove('active')); // Clear active sort
+      advSortButtons.forEach(btn => btn.classList.remove('active')); 
       
-      // Re-activate the '*' filter button
+      
       const allFilterButton = document.querySelector('.sorter-button[data-filter="*"]');
       if (allFilterButton) {
-        typeFilterButtons.forEach(btn => btn.classList.remove('active')); // Clear active from other type buttons
+        typeFilterButtons.forEach(btn => btn.classList.remove('active')); 
         allFilterButton.classList.add('active');
       }
 
@@ -238,6 +226,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Initial rendering
-  applyFiltersAndSort(); // Call once on load to apply initial filters (e.g., '*' type)
+  applyFiltersAndSort();
 });
