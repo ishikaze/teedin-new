@@ -35,14 +35,14 @@ function renderHeader() {
     const firstChild = body.firstChild; 
     const navbar = document.createElement('div')
     navbar.id = 'navbar'
-    navbar.innerHTML = `<div id="icon"></div>
+    navbar.innerHTML = `<div id="icon" onclick="redirect('${exitPath}')"></div>
         <div id="burger" class="burger-menu">
             <span></span>
             <span></span>
             <span></span>
         </div>
         <div id="nav" class="nav-links">
-            <a onmousedown="redirect('${exitPath}')">Home</a>
+            <a onmousedown="')">Home</a>
             <a onmousedown="redirect('${exitPath}buy')">Buy</a>
             <a onmousedown="redirect('${exitPath}sell')">Sell</a>
             <div class="nav-divider"></div>

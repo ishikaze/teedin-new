@@ -168,6 +168,7 @@ select:hover {
     width: 5em;
     height: 5em;
     margin-right: auto;
+    cursor: pointer;
 }
 
 #nav {
@@ -739,6 +740,102 @@ footer a:hover {
 }
 @keyframes l23-2 {
   100% {top:-0.1px}
+}
+
+#chat-container {
+    margin: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 50em;
+    min-height: 90vh;
+    gap: 1em;
+    padding: 1em 1em 8em 1em;
+    font-size: 1em;
+    font-weight: 300;
+}
+
+.seller-message {
+    margin-right: auto;
+    max-width: 80%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.25s ease-in-out;
+}
+
+.user-message {
+    margin-left: auto;
+    max-width: 80%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.25s ease-in-out;
+}
+
+.seller-name {
+    margin-right: auto;
+    width: 0;
+    opacity: 0.5;
+    text-wrap: nowrap;
+}
+
+.user-name {
+    margin-left: auto;
+    width: 0;
+    opacity: 0;
+    text-wrap: nowrap;
+}
+
+.seller-message-content {
+    background-color: #cfcfcf;
+    padding: 1em;
+    border-radius: 16px 16px 16px 0;
+}
+
+.user-message-content {
+    background-color: #7ba9ff;
+    padding: 1em;
+    border-radius: 16px 16px 0 16px;
+}
+
+.type-field {
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    position: absolute;
+    bottom: 1em;
+    margin-right: 1em;
+}
+
+.type-field textarea {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 1em;
+    border: none; 
+    border-radius: 16px; 
+    font-family: prompt;
+    font-size: 1em; 
+    outline: none; 
+    field-sizing: content;
+}
+
+#send-btn {
+    width: 3em;
+    height: 3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1em;
+}
+
+#send-btn i {
+    font-size: 1em;
 }
 
 @media (max-width: 720px) {
