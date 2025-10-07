@@ -3,9 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const messageInput = chatContainer.querySelector('textarea');
     const sendButton = chatContainer.querySelector('#send-btn');
     const typeField = chatContainer.querySelector('.type-field');
-    const userNameElement = chatContainer.querySelector('.user-name'); // Not directly used in display logic, but good to keep
-    const sellerNameElement = chatContainer.querySelector('.seller-name'); // Not directly used in display logic, but good to keep
 
+    // --- Scripted Chat Configuration ---
     let scriptActive = true;
     let scriptMessageIndex = 0;
     let currentTypingCharIndex = 0;
@@ -17,11 +16,28 @@ document.addEventListener('DOMContentLoaded', () => {
         { sender: 'user', message: 'มีครับ ผมจองให้วันเสาร์เวลา 14:00 น.นะครับ ถ้าต้องการบริการรถรับ-ส่ง แจ้งเพิ่มเติมได้ครับ' }
     ];
 
+    // --- Random Seller Responses (for after script ends) ---
     const randomSellerResponses = [
+        "ครับ",
+        "ครับ",
+        "ครับ",
         "ครับผม",
         "โอเคครับ"
     ];
 
+    // --- Typing Indicator Element ---
+    let currentTypingIndicatorElement = null; // Will store the currently active typing indicator element
+
+
+    // Function to format the current time as HH:MM
+    function getCurrentTime() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        return `${hours}:${minutes}`;
+    }
+
+    // Function to add a message to the chat
     function addMessage(sender, content, isUser = false) {
         const messageDiv = document.createElement('div');
         messageDiv.classList.add(isUser ? 'user-message' : 'seller-message');
@@ -36,18 +52,57 @@ document.addEventListener('DOMContentLoaded', () => {
         contentDiv.textContent = content;
         messageDiv.appendChild(contentDiv);
 
-        chatContainer.insertBefore(messageDiv, typeField);
+        // Add timestamp
+        const timestampDiv = document.createElement('div');
+        timestampDiv.classList.add('message-timestamp');
+        timestampDiv.textContent = getCurrentTime();
+        messageDiv.appendChild(timestampDiv);
+
+
+        chatContainer.insertBefore(messageDiv, typeField); // Insert before the type field
         scrollToTypeField();
     }
 
+    // Function to scroll the chat container so the type-field is visible
     function scrollToTypeField() {
         typeField.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
 
+    // Adjust textarea height dynamically
     function adjustTextareaHeight() {
         messageInput.style.height = 'auto';
         messageInput.style.height = (messageInput.scrollHeight) + 'px';
     }
+
+    // --- Typing Indicator Functions ---
+
+    function showTypingIndicator() {
+        // Only create if one isn't already active
+        if (!currentTypingIndicatorElement) {
+            currentTypingIndicatorElement = document.createElement('div');
+            currentTypingIndicatorElement.classList.add('typing-indicator-wrapper');
+            currentTypingIndicatorElement.innerHTML = `
+                <div class="typing-indicator-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            `;
+            // Insert right above the type-field, where the next message would go
+            chatContainer.insertBefore(currentTypingIndicatorElement, typeField);
+        }
+        // Ensure it's visible if it was hidden
+        currentTypingIndicatorElement.style.display = 'flex';
+        scrollToTypeField(); // Scroll to ensure it's visible
+    }
+
+    function hideTypingIndicator() {
+        if (currentTypingIndicatorElement && currentTypingIndicatorElement.parentNode) {
+            currentTypingIndicatorElement.parentNode.removeChild(currentTypingIndicatorElement);
+            currentTypingIndicatorElement = null; // Clear reference
+        }
+    }
+
+
+    // --- Scripted Chat Logic ---
 
     function prepareUserToTypeScriptMessage() {
         if (!scriptActive || scriptMessageIndex >= chatScript.length) {
@@ -57,28 +112,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const currentScriptItem = chatScript[scriptMessageIndex];
 
-        if (currentScriptItem.sender === 'seller') { 
-            messageInput.value = ''; 
-            currentTypingCharIndex = 0; 
-            messageInput.disabled = false; 
-            sendButton.style.pointerEvents = 'none'; 
+        if (currentScriptItem.sender === 'seller') { // User is supposed to type this message
+            hideTypingIndicator(); // Ensure indicator is hidden if it was shown
+            messageInput.value = '';
+            currentTypingCharIndex = 0;
+            messageInput.disabled = false;
+            sendButton.style.pointerEvents = 'none';
             sendButton.style.opacity = '0.5';
             messageInput.focus();
-        } else {
+        } else { // Actual seller is supposed to respond with this message
             messageInput.disabled = true;
             sendButton.style.pointerEvents = 'none';
             sendButton.style.opacity = '0.5';
+            showTypingIndicator(); // Show typing indicator
 
             setTimeout(() => {
+                // Before adding the actual message, remove the typing indicator
+                hideTypingIndicator();
                 addMessage('seller name', currentScriptItem.message, false);
                 scriptMessageIndex++;
-                prepareUserToTypeScriptMessage();
+                prepareUserToTypeScriptMessage(); // Move to next script item or prepare for user input
             }, 1000 + currentScriptItem.message.length * 20);
         }
     }
 
+    // Ends the script mode and allows free typing
     function endScript() {
         scriptActive = false;
+        hideTypingIndicator(); // Ensure indicator is hidden
         messageInput.value = '';
         messageInput.disabled = false;
         sendButton.style.pointerEvents = 'auto';
@@ -86,6 +147,8 @@ document.addEventListener('DOMContentLoaded', () => {
         adjustTextareaHeight();
         messageInput.focus();
     }
+
+    // --- Event Handlers ---
 
     function sendMessage() {
         const messageText = messageInput.value.trim();
@@ -97,13 +160,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (scriptActive) {
             const currentScriptItem = chatScript[scriptMessageIndex];
-            if (currentScriptItem.sender === 'seller') { 
+            if (currentScriptItem.sender === 'seller') { // This is a user-typed script message
                 if (messageText === currentScriptItem.message) {
                     addMessage('user name', messageText, true);
                     messageInput.value = '';
                     adjustTextareaHeight();
                     scriptMessageIndex++;
-                    sendButton.style.pointerEvents = 'auto'; 
+                    sendButton.style.pointerEvents = 'auto';
                     sendButton.style.opacity = '1';
                     prepareUserToTypeScriptMessage();
                 } else {
@@ -112,12 +175,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
             }
-        } else {
+        } else { // Free chat after script ends
             addMessage('user name', messageText, true);
             messageInput.value = '';
             adjustTextareaHeight();
 
+            // Random seller response
+            showTypingIndicator(); // Show typing indicator for random response
             setTimeout(() => {
+                hideTypingIndicator(); // Hide indicator before adding message
                 const randomIndex = Math.floor(Math.random() * randomSellerResponses.length);
                 const sellerResponse = randomSellerResponses[randomIndex];
                 addMessage('seller name', sellerResponse, false);
@@ -125,10 +191,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Keyboard listener for typing script messages
     document.addEventListener('keydown', (event) => {
         if (scriptActive && scriptMessageIndex < chatScript.length) {
             const currentScriptItem = chatScript[scriptMessageIndex];
-            if (currentScriptItem.sender === 'seller') {
+            if (currentScriptItem.sender === 'seller') { // It's the user's turn to "type"
                 if (currentTypingCharIndex < currentScriptItem.message.length) {
                     if (!event.metaKey && !event.ctrlKey && !event.altKey && event.key !== 'Shift' && event.key !== 'CapsLock') {
                         event.preventDefault();
@@ -149,9 +216,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-
+    // Event listener for the send button
     sendButton.addEventListener('click', sendMessage);
 
+    // Event listener for 'Enter' key in the textarea (without Shift)
     messageInput.addEventListener('keypress', (event) => {
         if (event.key === 'Enter' && !event.shiftKey) {
             if (!scriptActive || currentTypingCharIndex === chatScript[scriptMessageIndex].message.length) {
@@ -161,8 +229,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Event listener to adjust textarea height on input
     messageInput.addEventListener('input', adjustTextareaHeight);
 
+    // Initial setup
     adjustTextareaHeight();
-    prepareUserToTypeScriptMessage();
+    // Removed initializeTypingIndicator()
+    prepareUserToTypeScriptMessage(); // Start the scripted chat automatically on load
 });

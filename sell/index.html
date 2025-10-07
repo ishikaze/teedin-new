@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../style.css">
+    <title>Teedin</title>
+    <style>
+        .container {
+            display: flex;
+            background-color: #fff;
+            margin: auto;
+            width: 90vw; /* Adjust width as needed */
+            height: 90vh;
+            overflow: hidden; /* Ensures borders are rounded correctly */
+            padding: 2em; /* Padding inside the container */
+            gap: 2em; /* Space between the two main sections */
+            flex-wrap: wrap; /* Allow sections to wrap on smaller screens */
+        }
+
+        .left-section, .right-section {
+            flex: 1; /* Both sections take equal width */
+            width: 100%; /* Minimum width for each section before wrapping */
+        }
+
+        .left-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .upload-area {
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 40px 20px;
+            text-align: center;
+            background-color: #f9f9f9;
+            color: #666;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .upload-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+            color: #aaa;
+        }
+
+        .upload-area h3 {
+            margin-top: 0;
+            color: #333;
+            font-size: 1.2em;
+        }
+
+        .upload-button {
+            background-color: #e0e0e0;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 15px;
+            font-family: Prompt;
+        }
+
+        .upload-button:hover {
+            background-color: #d0d0d0;
+        }
+
+        .right-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .detail-header {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 1em;
+            color: #333;
+            background-color: #f0f0f0; /* Grey background for input fields */
+            outline: none; /* Remove outline on focus */
+        }
+
+        .textarea-field {
+            min-height: 120px; /* Larger height for description */
+            resize: vertical; /* Allow vertical resizing */
+        }
+
+        .map-area {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f0f0f0; /* Grey background for map area */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 250px; /* Match the visual height */
+            color: #666;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                padding: 15px;
+            }
+            .left-section, .right-section {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-section">
+            <div class="upload-area">
+                <div class="upload-icon">&#8673;</div> <!-- Unicode for an upward arrow -->
+                <h3>อัพโหลดรูปภาพ ที่ดิน ของคุณ</h3>
+                <button class="upload-button">เลือกไฟล์</button>
+            </div>
+        </div>
+
+        <div class="right-section">
+            <div class="detail-header">รายละเอียด</div>
+            
+            <input type="text" class="input-field" placeholder="ชื่อ">
+            
+            <textarea class="input-field textarea-field" placeholder="คำอธิบาย"></textarea>
+            
+            <div class="map-area">
+                MAP
+            </div>
+        </div>
+    </div>
+
+    <script src="../header_footer.js"></script>
+</body>

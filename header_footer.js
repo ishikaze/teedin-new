@@ -149,6 +149,7 @@ function redirect(to) {
 }
 
 showLoader(true)
+
 window.onload = function() {
   showLoader(false)
 };
